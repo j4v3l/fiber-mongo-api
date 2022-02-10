@@ -1,17 +1,20 @@
 package main
 
 import (
-    "log"
-
-    "github.com/gofiber/fiber/v2"
+	"fiber-mongo-api/configs"
+	"log"
+    "fiber-mongo-api/routes"
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
     app := fiber.New()
 
-    app.Get("/", func (c *fiber.Ctx) error {
-        return c.SendString("Hello, World!")
-    })
+    //run database connection
+    configs.ConnectDB()
+
+    //run routes
+    routes.UserRoute(app)
 
     log.Fatal(app.Listen(":3000"))
 }
